@@ -1,0 +1,10 @@
+.form-control.error {
+    border-color: #FF5370;
+}
+label.error {
+    color: #FF5370;
+    margin-top: 3px;
+}
+.feather{
+    font-size: 20px;
+}

@@ -10,7 +10,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link ">
+                    <a href="{{ route('users.index') }}" class="nav-link ">
                         <span class="pcoded-micon"><i class="feather icon-users"></i></span>
                         <span class="pcoded-mtext">Users</span>
                     </a>
@@ -18,13 +18,37 @@
                 <li class="nav-item pcoded-menu-caption">
                     <label>Settings</label>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('industries.index') }}" class="nav-link ">
+                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                        <span class="pcoded-mtext">Industries</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('countries.index') }}" class="nav-link ">
+                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                        <span class="pcoded-mtext">Countries</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('currencies.index') }}" class="nav-link ">
+                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                        <span class="pcoded-mtext">Currencies</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('timezones.index') }}" class="nav-link ">
+                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                        <span class="pcoded-mtext">Timezone</span>
+                    </a>
+                </li>
                 <li class="nav-item pcoded-hasmenu">
                     <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span
                             class="pcoded-mtext">ACL</span></a>
                     <ul class="pcoded-submenu">
-                        <li><a href="../element/bc_alert.html">Role Groups</a></li>
-                        <li><a href="../element/bc_alert.html">Roles</a></li>
-                        <li><a href="../element/bc_alert.html">Permissions</a></li>
+                        <li><a href="{{ route('role-groups.index') }}">Role Groups</a></li>
+                        <li><a href="{{ route('roles.index') }}">Roles</a></li>
+                        <li><a href="{{ route('permissions.index') }}">Permissions</a></li>
                     </ul>
                 </li>
             </ul>
