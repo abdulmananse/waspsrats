@@ -29,13 +29,18 @@ class IndustryController extends Controller
                     return getStatusBadge($industry->is_active);
                 })
                 ->addColumn('action', function ($industry) use ($user) {
-                    $action = '<span style="overflow: visible; position: relative; width: 130px;">';
-                    //if($user->hasrole('Super Admin') || $user->can('Edit Divisions'))
-                        $action .= '<a href="'. route('industries.edit', $industry->uuid) .'" data-edit="true" class="text-primary me-2" data-toggle="tooltip" title="'.__('Edit Industry').'"><i class="feather icon-edit"></i></a>';
-                    //if($user->hasrole('Super Admin') || $user->can('Delete Divisions'))
-                        $action .= '<a href="'. route('industries.destroy', $industry->uuid) .'" class="text-danger btn-delete" data-toggle="tooltip" title="'.__('Delete Industry').'"><i class="feather icon-trash-2"></i></a>';
-                      
-                    $action .= '</span>';    
+
+                    $action = '<td><div class="overlay-edit">';
+
+                    if ($user->can('Industries Update')) {
+                        $action .= '<a href="'.route('industries.edit', $industry->uuid).'" class="btn btn-icon btn-secondary"><i class="feather icon-edit-2"></i></a>';
+                    }
+
+                    if ($user->can('Industries Delete')) {    
+                        $action .= '<a href="'.route('industries.destroy', $industry->uuid).'" class="btn btn-icon btn-danger btn-delete"><i class="feather icon-trash-2"></i></a>';
+                    }
+                    $action .= '</div></td>';
+
                     return $action;
                 })
                 ->editColumn('id', 'ID: {{$id}}')

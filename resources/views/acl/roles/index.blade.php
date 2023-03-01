@@ -1,38 +1,22 @@
 <x-app-layout>
-    @php
-        $action = true;
-        // $action = (auth()->user()->hasrole('Super Admin') || auth()->user()->can('Edit Divisions') || auth()->user()->can('Delete Divisions'))?true:false;
-        // $createAction = (auth()->user()->hasrole('Super Admin') || auth()->user()->can('Create Divisions'))?true:false;
-    @endphp
-
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
-        <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-                <div class="pcoded-inner-content">
-                    
-                    <!-- [ breadcrumb ] start -->
-                    <x-breadcrumb title="Roles" :button="['name' => 'Add', 'allow' => true, 'link' => route('roles.create')]" />
-                    <!-- [ breadcrumb ] end -->
-                    
-                    <div class="main-body">
-                        <div class="page-wrapper">
-                            <!-- [ Main Content ] start -->
-                            <div class="row">
-                                <!-- [ basic-table ] start -->
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-block table-border-style">
-                                            <x-table action="false" :keys="['Name', 'Group Name']" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- [ basic-table ] end -->
-                            </div>
-                            <!-- [ Main Content ] end -->
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <x-breadcrumb title="Roles" :button="['name' => 'Add', 'allow' => true, 'link' => route('roles.create')]" />
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <!-- product profit end -->
+
+                <div class="col-xl-12 col-md-12">
+                    <div class="card user-profile-list">
+                        <div class="card-body-dd theme-tbl">
+                            <x-table action="false" :keys="['Name', 'Group Name', '']" />
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -42,18 +26,24 @@
 
     @push('scripts')
         <script type="text/javascript">
-        $("document").ready(function () {
-            var datatable_url = route('roles.ajax');
-            var datatable_columns = [
-                {data: 'name'},
-                {data: 'group.name'},
-                @if($action)
-                {data: 'action', width: '15%', orderable: false, searchable: false}
-                @endif
+            $("document").ready(function() {
+                var datatable_url = route('roles.ajax');
+                var datatable_columns = [{
+                        data: 'name'
+                    },
+                    {
+                        data: 'group.name'
+                    },
+                    {
+                        data: 'action',
+                        width: '15%',
+                        orderable: false,
+                        searchable: false
+                    }
                 ];
 
-                create_datatables(datatable_url,datatable_columns);
-          });
+                create_datatables(datatable_url, datatable_columns);
+            });
         </script>
     @endpush
 

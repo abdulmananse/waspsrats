@@ -28,37 +28,45 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector('.pcoded-header > .collapse,.pcoded-header > .container > .collapse').classList.toggle('d-flex');
     });
     // open user list
-    document.querySelector('.displayChatbox').addEventListener('click', function () {
-        document.querySelector('.header-user-list').classList.toggle('open');
-    });
+    if (document.querySelector('.displayChatbox')) {
+        document.querySelector('.displayChatbox').addEventListener('click', function () {
+            document.querySelector('.header-user-list').classList.toggle('open');
+        });
+    }
     // open messages
-    document.querySelector('.header-user-list .userlist-box').addEventListener('click', function () {
-        document.querySelector('.header-chat').classList.add('open');
-        document.querySelector('.header-user-list').classList.toggle('msg-open');
-    });
+    if (document.querySelector('.header-user-list .userlist-box')) {
+        document.querySelector('.header-user-list .userlist-box').addEventListener('click', function () {
+            document.querySelector('.header-chat').classList.add('open');
+            document.querySelector('.header-user-list').classList.toggle('msg-open');
+        });
+    }
     // close user list
-    document.querySelector('.h-back-user-list').addEventListener('click', function () {
-        document.querySelector('.header-chat').classList.remove('open');
-        document.querySelector('.header-user-list').classList.remove('msg-open');
-    });
+    if (document.querySelector('.h-back-user-list')) {
+        document.querySelector('.h-back-user-list').addEventListener('click', function () {
+            document.querySelector('.header-chat').classList.remove('open');
+            document.querySelector('.header-user-list').classList.remove('msg-open');
+        });
+    }
 
     //  full chat
-    document.querySelector('.h-close-text').addEventListener('click', function () {
+    $('.h-close-text').on('click', function () {
         document.querySelector('.header-chat').classList.remove('open');
         document.querySelector('.header-user-list').classList.remove('open');
         document.querySelector('.header-user-list').classList.remove('msg-open');
     });
-    document.querySelector('.btn-attach').click(function () {
+
+    $('.btn-attach').click(function () {
         document.querySelector('.chat-attach').trigger('click');
     });
-    document.querySelector('.h-send-chat').addEventListener('keyup', function (e) {
+
+    $('.h-send-chat').on('keyup', function (e) {
         fc(e);
     });
-    document.querySelector('.btn-send').addEventListener('click', function (e) {
+    $('.btn-send').on('click', function (e) {
         cfc(e);
     });
     // Friend scroll
-    if (document.querySelector('.main-friend-cont')[0]) {
+    if (document.querySelector('.main-friend-cont')) {
         document.querySelector(".main-friend-cont").each(function () {
             var px = new PerfectScrollbar(this, {
                 wheelSpeed: .5,
@@ -69,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
-    if (document.querySelector('.main-chat-cont')[0]) {
+    if (document.querySelector('.main-chat-cont')) {
         var px = new PerfectScrollbar('.main-chat-cont', {
             wheelSpeed: .5,
             swipeEasing: 0,
@@ -78,7 +86,8 @@ document.addEventListener("DOMContentLoaded", function () {
             minScrollbarLength: 40,
         });
     }
-    document.querySelector("#search-friends").addEventListener("keyup", function () {
+
+    $("#search-friends").on("keyup", function () {
         var g = document.querySelector(this).value.toLowerCase();
         document.querySelector(".header-user-list .userlist-box .media-body .chat-header").each(function () {
             var s = document.querySelector(this).text().toLowerCase();
@@ -182,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // remove pre-loader start
     setTimeout(function () {
-        document.querySelector('.loader-bg').remove();
+        $('.loader-bg').remove();
     }, 400);
     // remove pre-loader end
 });

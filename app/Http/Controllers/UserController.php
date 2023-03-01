@@ -25,18 +25,25 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
             $users = User::query();
-            $authUser = Auth::user();
+            $auth = Auth::user();
             
             return Datatables::of($users)
-                ->addColumn('action', function ($user) use ($authUser) {
-                    $action = '<span style="overflow: visible; position: relative; width: 130px;">';
-                    //if($user->hasrole('Super Admin') || $user->can('Edit Divisions'))
-                        $action .= '<a href="'. route('users.edit', $user->uuid) .'" data-edit="true" class="text-primary me-2" data-toggle="tooltip" title="'.__('Edit Role').'"><i class="feather icon-edit"></i></a>';
-                    //if($user->hasrole('Super Admin') || $user->can('Delete Divisions'))
-                    if($user->id > 1)
-                        $action .= '<a href="'. route('users.destroy', $user->uuid) .'" class="text-danger btn-delete" data-toggle="tooltip" title="'.__('Delete Role').'"><i class="feather icon-trash-2"></i></a>';
-                      
-                    $action .= '</span>';    
+                ->addColumn('role', function ($user) {
+                    return $user->getRoleNames()->first();
+                })
+                ->addColumn('action', function ($user) use ($auth) {
+
+                    $action = '<td><div class="overlay-edit">';
+
+                    if ($auth->can('Roles Update')) {
+                        $action .= '<a href="'.route('users.edit', $user->uuid).'" class="btn btn-icon btn-secondary"><i class="feather icon-edit-2"></i></a>';
+                    }
+
+                    if ($auth->can('Roles Delete')) {    
+                        $action .= '<a href="'.route('users.destroy', $user->uuid).'" class="btn btn-icon btn-danger btn-delete"><i class="feather icon-trash-2"></i></a>';
+                    }
+                    $action .= '</div></td>';
+
                     return $action;
                 })
                 ->editColumn('id', 'ID: {{$id}}')
@@ -73,9 +80,10 @@ class UserController extends Controller
         $user = User::create($request->all());
 
         if ($user) {
-            $user = User::uuid($user->uuid)->first();
             $role = Role::find($request->role_id);
-            $user->assignRole($role);
+            if ($role) {
+                $user->assignRole($role);
+            }
         }
         
 
@@ -130,7 +138,9 @@ class UserController extends Controller
         if ($user) {
             DB::table('model_has_roles')->where('model_id', $user->id)->delete();
             $role = Role::find($request->role_id);
-            $user->assignRole($role);
+            if ($role) {
+                $user->assignRole($role);
+            }
             $user->update($request->all());
             
             Session::flash('success', __('Role successfully updated!'));

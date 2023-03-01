@@ -12,7 +12,8 @@
 
                             <form method="POST" action="{{ route('password.email') }}">
                                 @csrf
-                                <img src="{{ asset('images/logo-dark.png') }}" alt="" class="img-fluid mb-4">
+                                {{-- <img src="{{ asset('images/logo-dark.png') }}" alt="" class="img-fluid mb-4"> --}}
+                                <h5 class="mb-3 f-w-900 text-primary">WASPS RATS</h5>
                                 <h4 class="mb-3 f-w-400">Reset your password</h4>
                                 <div class="input-group mb-4">
                                     <span class="input-group-text"><i class="feather icon-mail"></i></span>

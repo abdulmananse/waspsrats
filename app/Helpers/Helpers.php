@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Company;
+use App\Models\Country;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -8,6 +10,7 @@ use App\Models\User;
 use App\Models\District;
 use App\Models\SMSLog;
 use App\Models\Logs;
+use App\Models\Service;
 
 /**
 * Encode Id
@@ -483,6 +486,33 @@ if (!function_exists('getStatusBadge')) {
 }
 
 /**
+* Get Excepts Array
+* @param $key
+* @return mix
+*/
+if (!function_exists('getExceptsArray')) {
+
+    function getExceptsArray($key = 0, $secKey = '')
+    {
+        $excepts['except_1'] = [1 => 'the 1st', 2 => 'the 2nd', 3 => 'the 3rd', 4 => 'the 4th'];
+        $excepts['except_2'] = [1 => 'Mon of', 2 => 'Tue of', 3 => 'Wed of', 4 => 'Thu of', 5 => 'Fri of', 6 => 'Sat of', 7 => 'Sun of'];
+        $excepts['except_3'] = [1 => 'every week', 2 => 'every month'];
+
+        if ($key > 0 && $key <= 3) {
+            if (!empty($secKey) && $secKey > 0) {
+                return $excepts['except_' . $key][$secKey];
+            } else {
+                return '';
+            }
+            return isset($excepts['except_' . $key]) ? $excepts['except_' . $key] : '';
+        }
+
+        return $excepts;        
+    }
+
+}
+
+/**
 * Get Uuid
 *
 * @return mix
@@ -534,7 +564,67 @@ if (!function_exists('getDistrictList')) {
         $districts = District::pluck('name', 'id'); 
         return (empty($prepend))?$districts:$districts->prepend($prepend, '');
     }
+}
 
+/**
+* Get Company List
+*
+* @param $prepend
+* @return mix
+*/
+if (!function_exists('getCompanyList')) {
+
+    function getCompanyList($prepend = [])
+    {
+        $companies = Company::pluck('name', 'id'); 
+        return empty($prepend) ? $companies : $companies->prepend($prepend, '');
+    }
+}
+
+/**
+* Get Customer List
+*
+* @param $prepend
+* @return mix
+*/
+if (!function_exists('getCustomerList')) {
+
+    function getCustomerList($prepend = [])
+    {
+        $customers = [];
+        //$customers = Customer::pluck('name', 'id'); 
+        return empty($prepend) ? $customers : $customers->prepend($prepend, '');
+    }
+}
+
+/**
+* Get Service List
+*
+* @param $prepend
+* @return mix
+*/
+if (!function_exists('getServiceList')) {
+
+    function getServiceList($prepend = [])
+    {
+        $services = Service::pluck('name', 'id'); 
+        return empty($prepend) ? $services : $services->prepend($prepend, '');
+    }
+}
+
+/**
+* Get Country List
+*
+* @param $prepend
+* @return mix
+*/
+if (!function_exists('getCountryList')) {
+
+    function getCountryList($prepend = [])
+    {
+        $countries = Country::pluck('name', 'id'); 
+        return empty($prepend) ? $countries : $countries->prepend($prepend, '');
+    }
 }
 
 /**

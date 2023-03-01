@@ -1,22 +1,17 @@
-<div>
-    <table class="datatable table table-bordered table-hover table-checkable" id="datatable" style="margin-top: 13px !important">
+<div class="dt-responsive table-responsive">
+    <table id="datatable" class="table nowrap datatable">
         <thead>
             <tr>
-                @if($checkbox == true)
-                <th><input type="checkbox" id="id_check_all" class="group-checkable"/></th>
-                @endif
-                @foreach($keys as $key => $value)
-                <th>{{ $value }}</th>
-                @endforeach
-                @if($action)
-                <th>Action</th>
-                @endif
+                @forelse ($keys as $key)
+                    <th>{{ $key }}</th>
+                @empty
+                @endforelse
             </tr>
         </thead>
         <tbody>
-            <tr><td colspan="{{ ($action)?(count($keys)+1):count($keys) }}" align="center">No matching records found</td></tr>
+            <tr>
+                <td colspan="{{ count($keys) }}" align="center">No matching records found</td>
+            </tr>
         </tbody>
-        <tfoot>
-        </tfoot>
     </table>
 </div>

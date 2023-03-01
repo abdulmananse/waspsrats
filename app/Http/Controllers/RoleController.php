@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\RoleRequest;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RoleGroup;
 use Session;
@@ -26,13 +27,22 @@ class RoleController extends Controller
             
             return Datatables::of($roles)
                 ->addColumn('action', function ($role) use ($user) {
-                    $action = '<span style="overflow: visible; position: relative; width: 130px;">';
-                    //if($user->hasrole('Super Admin') || $user->can('Edit Divisions'))
-                        $action .= '<a href="'. route('roles.edit', $role->uuid) .'" data-edit="true" class="text-primary me-2" data-toggle="tooltip" title="'.__('Edit Role').'"><i class="feather icon-edit"></i></a>';
-                    //if($user->hasrole('Super Admin') || $user->can('Delete Divisions'))
-                        $action .= '<a href="'. route('roles.destroy', $role->uuid) .'" class="text-danger btn-delete" data-toggle="tooltip" title="'.__('Delete Role').'"><i class="feather icon-trash-2"></i></a>';
-                      
-                    $action .= '</span>';    
+
+                    $action = '<td><div class="overlay-edit">';
+
+                    if ($user->can('Role Permissions Index')) {
+                        $action .= '<a href="'.route('roles.getPermissions', $role->uuid).'" class="btn btn-icon btn-success"><i class="fas fa-key"></i></a>';
+                    }
+
+                    if ($user->can('Roles Update')) {
+                        $action .= '<a href="'.route('roles.edit', $role->uuid).'" class="btn btn-icon btn-secondary"><i class="feather icon-edit-2"></i></a>';
+                    }
+
+                    if ($user->can('Roles Delete')) {    
+                        $action .= '<a href="'.route('roles.destroy', $role->uuid).'" class="btn btn-icon btn-danger btn-delete"><i class="feather icon-trash-2"></i></a>';
+                    }
+                    $action .= '</div></td>';
+
                     return $action;
                 })
                 ->editColumn('id', 'ID: {{$id}}')
@@ -83,7 +93,7 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  App\Models\Role;
+     * @param  \App\Models\Role $role
      * @return \Illuminate\Http\Response
      */
     public function edit(Role $role)
@@ -95,8 +105,8 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\RoleRequest  $request
-     * @param  int  $id
+     * @param  \App\Models\Role $role
+     * @param  \App\Http\Requests\RoleRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function update(Role $role, RoleRequest $request)
@@ -126,4 +136,34 @@ class RoleController extends Controller
             'message' => __('Role not exist against this id')
         ], $this->errorStatus);
     }
+
+    /**
+     * Get role permissions.
+     *
+     * @param  \App\Models\Role $role
+     * @return \Illuminate\Http\Response
+     */
+    public function getRolePermissions(Role $role)
+    {
+       $permissions = Permission::pluck('name', 'id');
+       return view('acl.roles.permissions', get_defined_vars());
+    }
+
+    /**
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+   public function updateRolePermission($id, Request $request)
+   {
+       $permissions = $request->permissions;
+       $role = Role::uuid($id)->firstOrFail();
+
+       $role->syncPermissions($permissions);
+
+       Session::flash('success', __('Permissions updated!'));
+       return redirect()->route('roles.index');
+   }
 }

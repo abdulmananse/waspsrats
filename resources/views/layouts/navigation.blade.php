@@ -1,56 +1,171 @@
 <!-- [ navigation menu ] start -->
 <nav class="pcoded-navbar menupos-fixed menu-light ">
     <div class="navbar-wrapper  ">
-        <div class="navbar-content scroll-div " >
+        <div class="navbar-content scroll-div ">
             <ul class="nav pcoded-inner-navbar ">
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link ">
-                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                        <span class="pcoded-mtext">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('users.index') }}" class="nav-link ">
-                        <span class="pcoded-micon"><i class="feather icon-users"></i></span>
-                        <span class="pcoded-mtext">Users</span>
-                    </a>
-                </li>
+                @can('Dashboard')
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                            <span class="pcoded-mtext">Dashboard</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Users Index')
+                    <li class="nav-item">
+                        <a href="{{ route('users.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                            <span class="pcoded-mtext">Users</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Companies Index')
+                    <li class="nav-item">
+                        <a href="{{ route('companies.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                            <span class="pcoded-mtext">Companies</span>
+                        </a>
+                    </li>
+                @endcan
+                @canany(['Schedule Groups Index', 'Schedules Index'])
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-clock"></i></span><span class="pcoded-mtext">Schedule</span></a>
+                        <ul class="pcoded-submenu">
+                            @can('Schedule Groups Index')
+                                <li><a href="{{ route('schedule-groups.index') }}">Schedule Groups</a></li>
+                            @endcan
+                            @can('Schedules Index')
+                                <li><a href="{{ route('schedules.index') }}">Schedules</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
+                @can('Services Index')
+                    <li class="nav-item">
+                        <a href="{{ route('services.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-briefcase"></i></span>
+                            <span class="pcoded-mtext">Services</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Items Index')
+                    <li class="nav-item">
+                        <a href="{{ route('items.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span>
+                            <span class="pcoded-mtext">Items</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Customers Index')
+                    <li class="nav-item">
+                        <a href="{{ route('customers.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                            <span class="pcoded-mtext">Customers</span>
+                        </a>
+                    </li>
+                @endcan
+
                 <li class="nav-item pcoded-menu-caption">
                     <label>Settings</label>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('industries.index') }}" class="nav-link ">
-                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                        <span class="pcoded-mtext">Industries</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('countries.index') }}" class="nav-link ">
-                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                        <span class="pcoded-mtext">Countries</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('currencies.index') }}" class="nav-link ">
-                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                        <span class="pcoded-mtext">Currencies</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('timezones.index') }}" class="nav-link ">
-                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                        <span class="pcoded-mtext">Timezone</span>
-                    </a>
-                </li>
-                <li class="nav-item pcoded-hasmenu">
-                    <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span
-                            class="pcoded-mtext">ACL</span></a>
-                    <ul class="pcoded-submenu">
-                        <li><a href="{{ route('role-groups.index') }}">Role Groups</a></li>
-                        <li><a href="{{ route('roles.index') }}">Roles</a></li>
-                        <li><a href="{{ route('permissions.index') }}">Permissions</a></li>
-                    </ul>
-                </li>
+
+                @can('Industries Index')
+                    <li class="nav-item">
+                        <a href="{{ route('industries.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                            <span class="pcoded-mtext">Industries</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Taxes Index')
+                    <li class="nav-item">
+                        <a href="{{ route('taxes.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-settings"></i></span>
+                            <span class="pcoded-mtext">Taxes</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Countries Index')
+                    <li class="nav-item">
+                        <a href="{{ route('countries.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-globe"></i></span>
+                            <span class="pcoded-mtext">Countries</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Currencies Index')
+                    <li class="nav-item">
+                        <a href="{{ route('currencies.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-briefcase"></i></span>
+                            <span class="pcoded-mtext">Currencies</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Timezone Index')
+                    <li class="nav-item">
+                        <a href="{{ route('timezones.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-clock"></i></span>
+                            <span class="pcoded-mtext">Timezone</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Methods Index')
+                    <li class="nav-item">
+                        <a href="{{ route('methods.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-briefcase"></i></span>
+                            <span class="pcoded-mtext">Methods</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Sources Index')
+                    <li class="nav-item">
+                        <a href="{{ route('sources.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-settings"></i></span>
+                            <span class="pcoded-mtext">Sources</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('Tags Index')
+                    <li class="nav-item">
+                        <a href="{{ route('tags.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-target"></i></span>
+                            <span class="pcoded-mtext">Tags</span>
+                        </a>
+                    </li>
+                @endcan
+                @canany(['Role Groups Index', 'Roles Index', 'Permissions Index'])
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-box"></i></span><span class="pcoded-mtext">ACL</span></a>
+                        <ul class="pcoded-submenu">
+                            @can('Role Groups Index')
+                                <li><a href="{{ route('role-groups.index') }}">Role Groups</a></li>
+                            @endcan
+                            @can('Roles Index')
+                                <li><a href="{{ route('roles.index') }}">Roles</a></li>
+                            @endcan
+                            @can('Permissions Index')
+                                <li><a href="{{ route('permissions.index') }}">Permissions</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
+
+                @canany(['Settings Templates Index', 'Settings Tiles Index'])
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-box"></i></span><span class="pcoded-mtext">Settings</span></a>
+                        <ul class="pcoded-submenu">
+                            @can('Settings Templates Index')
+                                <li><a href="{{ route('settings.index', 'templates') }}">Templates</a></li>
+                            @endcan
+                            @can('Settings Tiles Index')
+                                <li><a href="{{ route('settings.index', 'tiles') }}">Tiles</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
             </ul>
         </div>
     </div>

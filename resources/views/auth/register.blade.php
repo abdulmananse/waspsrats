@@ -10,11 +10,12 @@
 
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
-                                <img src="{{ asset('images/logo-dark.png') }}" alt="" class="img-fluid mb-4">
+                                {{-- <img src="{{ asset('images/logo-dark.png') }}" alt="" class="img-fluid mb-4"> --}}
+                                <h5 class="mb-3 f-w-900 text-primary">WASPS RATS</h5>
                                 <h4 class="mb-3 f-w-400">Sign up</h4>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i class="feather icon-user"></i></span>
-                                    <input type="text" name="name" id="name" onblur="customFun('dsf')" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
+                                    <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
                                     @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
                                 <div class="input-group mb-3">

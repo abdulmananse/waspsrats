@@ -27,34 +27,5 @@
         <script src="{{ asset('js/plugins/bootstrap.min.js') }}"></script>
 
         <script src="{{ asset('js/menu-setting.js') }}"></script>
-
-
-        <script>
-            
-            $(document).ready(function() {
-                $("#name").blur(function(){
-                    console.log($(this).val());
-                });
-
-                // $(document).on('blur', "#name", function(){
-                //     console.log($(this).val());
-                // });
-                
-                document.getElementById('name').value = 'Azeem'; //javascript
-                $("#name").val('Manan');                        //jquery
-            
-                $("#name").hide();
-
-                setTimeout(function () {
-                    $("#name").show();
-
-                    //$(".card-body").html('<p>Azeem Ullah</p>');
-                }, 2000);
-            });
-
-            function customFun (text) {
-                console.log(text);
-            }
-        </script>
     </body>
 </html>

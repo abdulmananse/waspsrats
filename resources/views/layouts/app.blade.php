@@ -21,6 +21,7 @@
         
         <!-- Scripts -->
         
+        @livewireStyles
     </head>
     <body>
 
@@ -52,5 +53,7 @@
         @stack('scripts')
 
         @include('layouts.notification')
+
+        @livewireScripts
     </body>
 </html>

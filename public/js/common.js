@@ -296,6 +296,20 @@ _$.ready(function(){
 /**
  * Show Success Message
  * @param message
+ * @param flag
+ */
+function showMessage(message, flag = true)
+{
+    if (flag) {
+        successMessage(message);
+    } else {
+        errorMessage(message);
+    }
+}
+
+/**
+ * Show Success Message
+ * @param message
  * @param title
  */
 function successMessage(message, title)
