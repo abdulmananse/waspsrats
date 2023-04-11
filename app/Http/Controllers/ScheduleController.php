@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests\RoleRequest;
 use App\Http\Requests\ScheduleRequest;
+use App\Models\Customer;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\ScheduleGroup;
@@ -49,7 +51,15 @@ class ScheduleController extends Controller
                 ->make(true);
         }
 
-        return view('schedule.schedules.index');
+        $customerArray = [];
+        $customers = Customer::with('jobs')->has('jobs')->get();
+        foreach ($customers as $key => $customer) {
+            $customerArray[$customer->id] = $customer->first_name . ' (' . $customer->jobs->count() . ' active jobs)';
+        }
+        $schedules = Schedule::pluck('name', 'id');
+        //dd($customers->toArray());
+
+        return view('schedule.schedules.index', get_defined_vars());
     }
 
     /**
@@ -147,5 +157,27 @@ class ScheduleController extends Controller
         return response()->json([
             'message' => __('Schedule not exist against this id')
         ], $this->errorStatus);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reAssignSchedule(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'customer_id' => 'required|exists:customers,id',
+            'schedule_id' => 'required|exists:schedules,id',
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('error', $validator->errors()->first());
+            return back();
+        }
+
+        Session::flash('success', __('Jobs successfully assigned to schedule!'));
+        return back();
     }
 }

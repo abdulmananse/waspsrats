@@ -4,28 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Job extends Model
 {
     
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'account_no',
-        'email',
-        'company_name',
-        'phone',
-        'is_active'
+        'customer_id',
+        'service_id',
+        'from_date',
+        'from_time',
+        'to_date',
+        'to_time',
+        'status'
     ];
 
-    protected $appends = ['name'];
-
-    /**
-     * @return void
-     */
-    public function getNameAttribute()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
+    protected $dates = ['from_date', 'from_time', 'to_date', 'to_time'];
 
     /**
      * Scope a query to only include active users.
@@ -60,12 +52,22 @@ class Customer extends Model
     }
 
     /**
-     * Get all of the jobs for the Customer
+     * Get the customer that owns the Job
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function jobs()
+    public function customer()
     {
-        return $this->hasMany(Job::class);
+        return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * Get the service that owns the Job
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
     }
 }

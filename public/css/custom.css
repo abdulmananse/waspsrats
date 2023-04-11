@@ -50,6 +50,18 @@ label.error {
     margin-top: 10px;
 }
 
+.select2-container--default .select2-selection--single{
+    height: 35px;
+    color: #495057;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height: 35px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+    height: 35px;
+}
+
+
 @media (max-width: 767px) {
     .table-responsive {
         overflow-x: auto;

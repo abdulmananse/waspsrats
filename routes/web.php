@@ -8,6 +8,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\CustomerContactController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MethodController;
 use App\Http\Controllers\TimezoneController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TaxController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\JobController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,16 +38,16 @@ use App\Http\Controllers\TaxController;
 
 Route::redirect('/', 'dashboard');
 
-Route::get('test-api', function() {
-    return ['name' => 'Azeem Ullah'];
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     
+    Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
+    
+    Route::resource('jobs', JobController::class);
+
     Route::get('change-password', [UserController::class, 'changePassword'])->name('change-password');
     Route::post('change-password', [UserController::class, 'updatePassword'])->name('users.change-password');
     
@@ -54,6 +57,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('customers', CustomerController::class);
     Route::post('customers/ajax', [CustomerController::class, 'index'])->name('customers.ajax');
     
+    Route::resource('customer-contacts', CustomerContactController::class);
+    Route::post('customer-contacts/ajax', [CustomerContactController::class, 'index'])->name('customer-contacts.ajax');
+    
+    Route::get('customer-jobs/{customer_id}', [JobController::class, 'index'])->name('customers.jobs');
+    Route::post('customer-jobs/{customer_id}', [JobController::class, 'index'])->name('customers.jobs.ajax');
+
     Route::resource('companies', CompanyController::class);
     Route::post('companies/ajax', [CompanyController::class, 'index'])->name('companies.ajax');
 
@@ -61,6 +70,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('schedule-groups/ajax', [ScheduleGroupController::class, 'index'])->name('schedule-groups.ajax');
     Route::resource('schedules', ScheduleController::class);
     Route::post('schedules/ajax', [ScheduleController::class, 'index'])->name('schedules.ajax');
+    Route::post('schedules/re-assign', [ScheduleController::class, 'reAssignSchedule'])->name('schedules.reAssign');
 
     Route::resource('items', ItemController::class);
     Route::post('items/ajax', [ItemController::class, 'index'])->name('items.ajax');

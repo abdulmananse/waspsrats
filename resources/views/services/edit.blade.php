@@ -56,7 +56,6 @@
                                                 </li>
                                             </ul>
                                             <div class="tab-content" id="myTabContent">
-                                                <!-- [ user card1 ] start -->
                                                 <div class="tab-pane fade show active">
                                                     <div class="row">
                                                         @if ($tab == 'job')

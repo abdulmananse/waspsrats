@@ -11,6 +11,14 @@
                         </a>
                     </li>
                 @endcan
+                @can('Calendar Index')
+                    <li class="nav-item">
+                        <a href="{{ route('calendar.index') }}" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
+                            <span class="pcoded-mtext">Calendar</span>
+                        </a>
+                    </li>
+                @endcan
                 @can('Users Index')
                     <li class="nav-item">
                         <a href="{{ route('users.index') }}" class="nav-link ">

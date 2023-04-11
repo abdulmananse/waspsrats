@@ -33345,10 +33345,10 @@ new-task label input[type=checkbox] {
     border: 1px solid #ebedef;
 }
 
-.fc-scroller {
+/* .fc-scroller {
     overflow: visible !important;
     height: auto !important;
-}
+} */
 
 @media (max-width: 575.98px) {
     .fc-toolbar .fc-center,

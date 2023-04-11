@@ -4,20 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class CustomerContact extends Model
 {
-    
+
     protected $fillable = [
+        'customer_id',
         'first_name',
         'last_name',
-        'account_no',
         'email',
-        'company_name',
         'phone',
         'is_active'
     ];
-
-    protected $appends = ['name'];
 
     /**
      * @return void
@@ -57,15 +54,5 @@ class Customer extends Model
         static::creating(function ($model) {
             $model->uuid = getUuid();
         });
-    }
-
-    /**
-     * Get all of the jobs for the Customer
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function jobs()
-    {
-        return $this->hasMany(Job::class);
     }
 }

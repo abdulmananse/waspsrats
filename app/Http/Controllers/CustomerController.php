@@ -34,6 +34,14 @@ class CustomerController extends Controller
 
                     $action = '<td><div class="overlay-edit">';
 
+                    if ($user->can('Customer Jobs Index')) {
+                        $action .= '<a href="'.route('customers.jobs', $customer->uuid).'" class="btn btn-icon btn-secondary" title="Jobs"><i class="feather icon-watch"></i></a>';
+                    }
+                    
+                    if ($user->can('Customer Contacts Index')) {
+                        $action .= '<a href="'.route('customer-contacts.index', ['id' => $customer->uuid]).'" class="btn btn-icon btn-success" title="Contacts"><i class="feather icon-credit-card"></i></a>';
+                    }
+                    
                     if ($user->can('Customers Update')) {
                         $action .= '<a href="'.route('customers.edit', $customer->uuid).'" class="btn btn-icon btn-secondary"><i class="feather icon-edit-2"></i></a>';
                     }
